@@ -2,6 +2,19 @@ import { Component, signal, computed, Input, input, Output, output, EventEmitter
 import { DUMMY_USERS } from '../dummy-users'
 
 
+// type User = {
+//   id: string;
+//   avatar: string;
+//   name: string;
+// }
+
+interface User {
+  id: string;
+  avatar: string;
+  name: string;
+}
+
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -12,27 +25,21 @@ import { DUMMY_USERS } from '../dummy-users'
 export class UserComponent {
   @Input({
     required: true
-  }) avatar!: string
-  @Input({
-    required: true
-  }) name!: string;
+  }) user!: User
 
-  @Input({
-    required: true
-  }) id!: string
 
-  // @Output() select = new EventEmitter();
+  // @Output() select = new EventEmitter<string>();
 
   select = output<string>()
 
 
 
   get imagePath() {
-    return `assets/users/${this.avatar}`;
+    return `assets/users/${this.user.avatar}`;
   }
 
   onSelectUser() {
-    this.select.emit(this.id);
+    this.select.emit(this.user.id);
   }
 
 }
