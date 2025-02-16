@@ -3,6 +3,7 @@ import { TaskComponent } from "./task/task.component";
 import { dummyTasks } from '../dummy-tasks';
 import { NewTaskComponent } from "./new-task/new-task.component";
 import { NewTaskData } from './task/task.model';
+import { TaskService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -17,36 +18,18 @@ export class TasksComponent {
   }) name?: string;
   @Input({ required: true }) userId!: string;
   isAddingTask = false;
+  // private tasksService = new TaskService();
 
-  tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary:
-        'Learn all the basic and advanced features of Angular & how to apply them.',
-      dueDate: '2025-12-31',
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'Build a first prototype of the online shop website',
-      dueDate: '2024-05-31',
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15',
-    },
-  ]
+  constructor(private tasksService: TaskService) { // Dependency injection
+    // this.tasksService = tasksService;
+  }
+
+
 
   onCompleteTask(taskId: string) {
     console.log(`Task ${taskId} completed`);
-    this.tasks = this.tasks.filter(task => task.id !== taskId);
+    this.tasksService.onCompleteTask(taskId);
+    // this.tasks = this.tasks.filter(task => task.id !== taskId);
   }
 
   onStartAddTask() {
@@ -54,22 +37,11 @@ export class TasksComponent {
     this.isAddingTask = true;
   }
 
-  onCancelAddTask() {
+  onCloseAddTask() {
     this.isAddingTask = false;
   }
 
   get selectedUserTasks() {
-    return this.tasks.filter(task => task.userId === this.userId);
-  }
-
-  onAddTask(taskData: NewTaskData) {
-    this.tasks.unshift({
-      id: Math.random().toString(),
-      userId: this.userId,
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.date,
-    });
-    this.isAddingTask = false;
+    return this.tasksService.getUserTasks(this.userId);
   }
 }
