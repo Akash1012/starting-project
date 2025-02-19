@@ -60,7 +60,7 @@ export class TaskService {
 
     onCompleteTask(taskId: string) {
         console.log(taskId + " completed");
-        this.tasks = this.tasks.filter(task => task.id !== taskId);
+        this.tasks = this.tasks.filter(task => task.id !== taskId); // this task which is completed we are deleting that task
         this.saveTasks();
     }
 

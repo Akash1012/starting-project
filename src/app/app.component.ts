@@ -13,15 +13,15 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  users = DUMMY_USERS;
-  selectedUserId?: string;
+  users = DUMMY_USERS; // getting data from json file
+  selectedUserId?: string; // save id when user click on each user
 
   get selectedUser() {
-    return this.users.find(user => user.id === this.selectedUserId);
+    return this.users.find(user => user.id === this.selectedUserId); // it return the first match value if not match then return you undefined
   }
 
   onSelectUser(id: string) {
-    this.selectedUserId = id;
+    this.selectedUserId = id; // save selected user 
     console.log(`Selected user: ${this.selectedUserId}`);
   }
 }

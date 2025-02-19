@@ -29,7 +29,7 @@ export class UserComponent {
 
   // @Output() select = new EventEmitter<string>();
 
-  select = output<string>()
+  select = output<string>() // new way to emit (send data from child to parent component)
 
 
 
